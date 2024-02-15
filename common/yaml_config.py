@@ -17,7 +17,11 @@ class GetConf:
     def get_password(self):
         return self.env["password"]
 
+    def get_dbConfig(self):
+        return self.env["mysql"]
+
 
 if __name__ == "__main__":
     print(GetConf().get_username())
     print(GetConf().get_password())
+    print(GetConf().get_dbConfig())
