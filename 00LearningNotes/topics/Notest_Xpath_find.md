@@ -8,7 +8,9 @@
 ## 示例
 
 1. . 选取当前节点\
-<img src="https://github.com/ZHANG-AOXIANG/trading_system_autotest/00LearningNotes/images/xpath_find_this_node.png" alt="图片alt" title="图片title">
+https://github.com/ZHANG-AOXIANG/trading_system_autotest/blob/main/00LearningNotes/images/xpath_find_class_el_description_tbody_tr_last_second.png
+
+<img src="https://github.com/ZHANG-AOXIANG/trading_system_autotest/blob/main/00LearningNotes/images/xpath_find_this_node.png" alt="xpath_find_this_node.png" title="xpath_find_this_node.png">
 ![xpath_find_this_node](https://github.com/ZHANG-AOXIANG/trading_system_autotest/00LearningNotes/images/xpath_find_this_node.png){width=299}{border-effect=line}
 2. .. 选取当前节点的父节点
 ![](xpath_find_this_node_father.png){ width=299 }{border-effect=line}
