@@ -8,7 +8,7 @@
 ## 示例
 
 1. . 选取当前节点
-![](00LearningNotes/images/xpath_find_this_node.png){ width=299 }{border-effect=line}
+![xpath_find_this_node](00LearningNotes/images/xpath_find_this_node.png){ width=299 }{border-effect=line}
 2. .. 选取当前节点的父节点
 ![](xpath_find_this_node_father.png){ width=299 }{border-effect=line}
 
