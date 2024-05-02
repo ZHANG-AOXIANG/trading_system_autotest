@@ -38,3 +38,11 @@ class HomeBase:
 
         # return "//div[@class='date_half']"
         return "//div[@class='calender']/following-sibling::div"
+
+    def user_img(self):
+        """
+        @PURPOSE: user img in home page
+        @RETURN: Xpath for user img
+        """
+
+        return "//span[contains(text(), '欢迎您回来')]/parent::div/preceding-sibling::div//img"
