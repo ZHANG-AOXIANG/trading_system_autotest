@@ -29,3 +29,12 @@ class HomeBase:
 
         # return "//div[@class='card_div']/span"
         return "//span[starts-with(text(), '欢迎您回来')]"
+
+    def date_display_area(self):
+        """
+        @PURPOSE: date display area in home page
+        @RETURN: Xpath for data display area
+        """
+
+        # return "//div[@class='date_half']"
+        return "//div[@class='calender']/following-sibling::div"
