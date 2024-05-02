@@ -12,6 +12,22 @@ class WebdriverConfig:
     Browser driver config
     """
 
+    '''
+    chrome_options = webdriver.ChromeOptions()
+    # set the browser windows size
+    chrome_options.add_argument("windows-size=1920,1080")
+
+    add_argument KEY 
+    "excludeSwitches", ["enable-automation"] : remove notice about browser is controlled by automation
+    "--ignore-certificate-errors" : solver the problem that Chrome can not access HTTPS
+    "--allow-insecure-localhost" : allow to ignore the TLS/SSL errors in localhost
+    "--incognito" : set Chrome browser to private mode
+    "--headless" : set to headless mode
+    "--disable-gpu" : improve process speed
+    "--no-sandbox" : 
+    "--disable-dev-shm-usage" : 
+    '''
+
     def webdirver_config(self):
         url = "https://registry.npmmirror.com/-/binary/chromedriver"
         latest_release_url = "https://registry.npmmirror.com/-/binary/chromedriver/LATEST_RELEASE"
