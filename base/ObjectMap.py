@@ -3,7 +3,7 @@
 # @TIME: 00:46 2024/5/5 UTC+8
 
 import time
-from selenium.common.exceptions import ElementNotVisibleException
+from selenium.common.exceptions import ElementNotVisibleException, WebDriverException
 
 
 class ObjectMap:
@@ -41,3 +41,30 @@ class ObjectMap:
             time.sleep(0.1)
         raise ElementNotVisibleException(
             "It is failed to locate element. Locate type: " + locate_type + ". Locate_expression: " + locate_expression)
+
+    def wait_for_completing_page_loading(self, driver, timeout=10):
+        """
+        Wait for the page loading to complete
+        :param driver: browser driver
+        :param timeout: the max time to wait
+        :return:
+        """
+        start_ms = time.time() * 1000  # start time
+        stop_ms = start_ms + (timeout * 1000)  # stop time
+        for x in range(int(timeout * 10)):
+            try:
+                state = driver.execute_script("return document.readyState;")
+            except WebDriverException:
+                # js command will be failed to execute if there is issue from Driver. just skip
+                time.sleep(0.1)
+                return True
+            if state == "complete":
+                return True
+            else:
+                now_ms = time.time() * 1000
+                if now_ms >= stop_ms:
+                    break
+                time.sleep(0.1)
+                pass
+            time.sleep(0.1)
+        raise Exception("It is failed to wait for page loading to complete after " + str(timeout) + " s.")
