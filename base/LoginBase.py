@@ -18,5 +18,5 @@ class LoginBase:
         :param button_name:
         :return:
         '''
-        return "//span[text()='" + button_name + "']/parent::button"
 
+        return "//span[text()='" + button_name + "']/parent::button"
