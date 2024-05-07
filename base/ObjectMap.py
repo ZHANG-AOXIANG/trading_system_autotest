@@ -3,7 +3,7 @@
 # @TIME: 00:46 2024/5/5 UTC+8
 
 import time
-from selenium.common.exceptions import ElementNotVisibleException, WebDriverException
+from selenium.common.exceptions import ElementNotVisibleException, WebDriverException,NoSuchElementException
 from common.yaml_config import GetConf
 
 
@@ -154,3 +154,17 @@ class ObjectMap:
             print("it is failed to go to url, reasons: " + str(e))
             return False
         return True
+
+    def is_element_display(self, driver, locate_type, locate_expression):
+        """
+        check if the element is displayed
+        :param driver: browser driver
+        :param locate_type: id, name, class, xpath, css, ...
+        :param locate_expression: the value of locate_type
+        :return: True if the element is displayed, False if the element is not displayed
+        """
+        try:
+            driver.find_element(by=locate_type, value=locate_expression)
+            return True
+        except NoSuchElementException:
+            return False
