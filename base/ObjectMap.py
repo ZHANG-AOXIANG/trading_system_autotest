@@ -3,7 +3,9 @@
 # @TIME: 00:46 2024/5/5 UTC+8
 
 import time
-from selenium.common.exceptions import ElementNotVisibleException, WebDriverException,NoSuchElementException
+from selenium.common.exceptions import ElementNotVisibleException, WebDriverException, NoSuchElementException, \
+    StaleElementReferenceException
+from selenium.webdriver.common.keys import Keys
 from common.yaml_config import GetConf
 
 
@@ -168,3 +170,59 @@ class ObjectMap:
             return True
         except NoSuchElementException:
             return False
+
+    def fill_value(self, driver, locate_type, locate_expression, value, timeout):
+        """
+        fill value into the element
+        :param driver: browser driver
+        :param locate_type: id, name, class, xpath, css, ...
+        :param locate_expression: the value of locate_type
+        :param value: the value to fill
+        :param timeout: the max time to wait
+        :return: True
+        """
+        element = self.get_element(driver, locate_type=locate_type, locate_expression=locate_expression,
+                                   timeout=timeout)
+        try:
+            element.clear()
+        except StaleElementReferenceException:
+            self.wait_for_completing_page_loading(driver=driver)
+            time.sleep(0.06)
+            element = self.wait_for_element_appear(driver, locate_type=locate_type, locate_expression=locate_expression,
+                                                   timeout=timeout)
+            try:
+                element.clear()
+            except Exception:
+                pass
+        except Exception:
+            pass
+        if type(value) is int or type(value) is float:
+            value = str(value)
+
+        try:
+            if not value.endswith("/n"):
+                element.send_keys(value)
+                self.wait_for_completing_page_loading(driver=driver)
+            else:
+                value = value[:-1]
+                element.send_keys(value)
+                element.send_keys(Keys.ENTER)
+                self.wait_for_completing_page_loading(driver=driver)
+        except StaleElementReferenceException:
+            self.wait_for_completing_page_loading(driver=driver)
+            time.sleep(0.06)
+            element = self.wait_for_element_appear(driver=driver, locate_type=locate_type,
+                                                   locate_expression=locate_expression)
+            element.clear()
+            if not value.endswith("/n"):
+                element.send_keys(value)
+                self.wait_for_completing_page_loading(driver=driver)
+            else:
+                value = value[:-1]
+                element.send_keys(value)
+                element.send_keys(Keys.ENTER)
+                self.wait_for_completing_page_loading(driver=driver)
+        except Exception:
+            raise Exception("It is failed to fill value into the element, locate type: " + locate_type +
+                            "\nlocate_expression: " + locate_expression + "\nvalue: " + value)
+        return True
