@@ -7,3 +7,5 @@ mysql:
   password:123456
   port:3306
   user:root
+
+url: 192.168.0.121

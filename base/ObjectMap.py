@@ -4,9 +4,11 @@
 
 import time
 from selenium.common.exceptions import ElementNotVisibleException, WebDriverException
+from common.yaml_config import GetConf
 
 
 class ObjectMap:
+    url = GetConf.get_url()
 
     def get_element(self, driver, locate_type, locate_expression, is_visible=False, timeout=10):
         """
@@ -70,9 +72,9 @@ class ObjectMap:
             time.sleep(0.1)
         raise Exception("It is failed to wait for page loading to complete after " + str(timeout) + " s.")
 
-    def is_element_disappear(self, driver, locate_type, locate_expression, timeout=10):
+    def wait_for_element_disappear(self, driver, locate_type, locate_expression, timeout=10):
         """
-        Check if the element disappearing
+        wait for the element disappearing
         :param driver: browser driver
         :param locate_type: id, name, class, xpath, css, ...
         :param locate_expression: the value of locate_type
@@ -126,3 +128,29 @@ class ObjectMap:
                 "Element does not appear, locate type: " + locate_type + " locate expression: " + locate_expression)
         else:
             pass
+
+    def go_to_url(self, driver, url, locate_type_disappear=None, locate_expression_disappear=None,
+                  locate_type_appear=None, locate_expression_appear=None):
+        """
+        go to url
+        :param driver: driver of browser
+        :param url: the goal address
+        :param locate_type_disappear: locate type of element when waiting for the element disappear
+        :param locate_expression_disappear: expression of element when waiting for the element disappear
+        :param locate_type_appear: locate type of element when waiting for the element appear
+        :param locate_expression_appear: expression of element when waiting for the element appear
+        :return True
+
+        """
+        try:
+            driver.get(self.url + url)
+            # waiting  the new page complete loading
+            self.wait_for_completing_page_loading(driver)
+            # check the element in old page disappear
+            self.wait_for_element_disappear(driver, locate_type_disappear, locate_expression_disappear)
+            # check the element in new page appear
+            self.wait_for_element_appear(driver, locate_type_appear, locate_expression_appear)
+        except Exception as e:
+            print("it is failed to go to url, reasons: " + str(e))
+            return False
+        return True
