@@ -196,6 +196,7 @@ class ObjectMap:
                 pass
         except Exception:
             pass
+
         if type(value) is int or type(value) is float:
             value = str(value)
 
