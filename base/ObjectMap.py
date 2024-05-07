@@ -53,9 +53,10 @@ class ObjectMap:
         stop_ms = start_ms + (timeout * 1000)  # stop time
         for x in range(int(timeout * 10)):
             try:
+                # get the state of web page
                 state = driver.execute_script("return document.readyState;")
             except WebDriverException:
-                # js command will be failed to execute if there is issue from Driver. just skip
+                # js command will be failed to execute if there is issue from Driver. just skip and return True
                 time.sleep(0.1)
                 return True
             if state == "complete":
@@ -68,3 +69,60 @@ class ObjectMap:
                 pass
             time.sleep(0.1)
         raise Exception("It is failed to wait for page loading to complete after " + str(timeout) + " s.")
+
+    def is_element_disappear(self, driver, locate_type, locate_expression, timeout=10):
+        """
+        Check if the element disappearing
+        :param driver: browser driver
+        :param locate_type: id, name, class, xpath, css, ...
+        :param locate_expression: the value of locate_type
+        :param timeout: the max time to wait
+        :return: True if the element disappear, False if the element is still visible
+        """
+        if locate_type:
+            start_ms = time.time() * 1000  # start time
+            stop_ms = start_ms + (timeout * 1000)  # stop time
+            for x in range(int(timeout * 10)):
+                try:
+                    element = driver.find_element(by=locate_type, value=locate_expression)
+                    if element.is_displayed():
+                        now_ms = time.time() * 1000
+                        if now_ms >= stop_ms:
+                            break
+                        time.sleep(0.1)
+                except Exception:
+                    return True
+            raise Exception(
+                "Element is not disappear, locate type: " + locate_type + "\nlocate_expression: " + locate_expression)
+        else:
+            pass
+
+    def wait_for_element_appear(self, driver, locate_type, locate_expression, timeout=30):
+        """
+        Wait for element appear
+        :param driver: browser driver
+        :param locate_type: id, name, class, xpath, css, ...
+        :param locate_expression: the value of locate_type
+        :param timeout: the max time to wait
+        :return: element
+        """
+        if locate_type:
+            start_ms = time.time() * 1000
+            stop_ms = start_ms + (timeout * 1000)
+            for x in range(int(timeout * 10)):
+                try:
+                    element = driver.find_element(by=locate_type, value=locate_expression)
+                    if element.is_displayed():
+                        return element
+                    else:
+                        raise Exception()
+                except Exception:
+                    now_ms = time.time() * 1000
+                    if now_ms >= stop_ms:
+                        break
+                    time.sleep(0.1)
+                    pass
+            raise ElementNotVisibleException(
+                "Element does not appear, locate type: " + locate_type + " locate expression: " + locate_expression)
+        else:
+            pass
