@@ -227,3 +227,67 @@ class ObjectMap:
             raise Exception("It is failed to fill value into the element, locate type: " + locate_type +
                             "\nlocate_expression: " + locate_expression + "\nvalue: " + value)
         return True
+
+    def element_click(
+            self,
+            driver,
+            locate_type,
+            locate_expression,
+            locate_type_disappear=None,
+            locate_expression_disappear=None,
+            locate_type_appear=None,
+            locate_expression_appear=None,
+            timeout=30
+    ):
+        """
+        click the element
+        :param driver: browser driver
+        :param locate_type: id, name, class, xpath, css, ...
+        :param locate_expression: the value of locate_type
+        :param locate_type_disappear: locate type of element when waiting for the element disappear
+        :param locate_expression_disappear: expression of element when waiting for the element disappear
+        :param locate_type_appear: locate type of element when waiting for the element appear
+        :param locate_expression_appear: expression of element when waiting for the element appear
+        :param timeout: the max time to wait
+        :return: True
+        """
+
+        # element must appear
+        element = self.wait_for_element_appear(
+            driver=driver,
+            locate_type=locate_type,
+            locate_expression=locate_expression,
+            timeout=timeout,
+        )
+        try:
+            element.click()
+        except StaleElementReferenceException:
+            self.wait_for_completing_page_loading(driver=driver)
+            time.sleep(0.06)
+            element = self.wait_for_element_appear(
+                driver=driver,
+                locate_type=locate_type,
+                locate_expression=locate_expression,
+                timeout=timeout
+            )
+            element.click()
+        except Exception as e:
+            print("Page exception, it can not to click element", e)
+            return False
+        try:
+            # after clicking, one element on old page disappear, one element on new page appear
+            self.wait_for_element_disappear(
+                driver=driver,
+                locate_type=locate_type_disappear,
+                locate_expression=locate_expression_disappear,
+            )
+            self.wait_for_element_appear(
+                driver=driver,
+                locate_type=locate_type_appear,
+                locate_expression=locate_expression_appear,
+            )
+        except Exception as e:
+            print("It is failed to wait element disappear or appear", e)
+            return False
+
+        return True
