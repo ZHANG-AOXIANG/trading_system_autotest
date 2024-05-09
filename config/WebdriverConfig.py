@@ -5,6 +5,7 @@
 
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 
 
 class WebdriverConfig:
@@ -29,9 +30,11 @@ class WebdriverConfig:
     '''
 
     def webdirver_config(self):
+
         url = "https://registry.npmmirror.com/-/binary/chromedriver"
         latest_release_url = "https://registry.npmmirror.com/-/binary/chromedriver/LATEST_RELEASE"
         driver = webdriver.Chrome(ChromeDriverManager(url=url, latest_release_url=latest_release_url).install())
         # delete all browser cookies
+        #driver=(webdriver.Edge(executable_path=ChromeDriverManager().install()))
         driver.delete_all_cookies()
         return driver

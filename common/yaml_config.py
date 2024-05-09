@@ -11,11 +11,13 @@ class GetConf:
         with open(file_path, "r", encoding="utf-8") as env_file:
             self.env = yaml.load(env_file, Loader=yaml.FullLoader)
 
-    def get_username(self):
-        return self.env["username"]
+    def get_username(self, user):
+        # return self.env["username"]
+        return self.env['user'][user]['username']
 
-    def get_password(self):
-        return self.env["password"]
+    def get_password(self, user):
+        # return self.env["password"]
+        return self.env['user'][user]['password']
 
     def get_dbConfig(self):
         return self.env["mysql"]
@@ -24,8 +26,3 @@ class GetConf:
         return self.env["url"]
 
 
-if __name__ == "__main__":
-    print(GetConf().get_username())
-    print(GetConf().get_password())
-    print(GetConf().get_dbConfig())
-    print(GetConf().get_url())

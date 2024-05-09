@@ -6,11 +6,13 @@ import time
 from selenium.common.exceptions import ElementNotVisibleException, WebDriverException, NoSuchElementException, \
     StaleElementReferenceException
 from selenium.webdriver.common.keys import Keys
+
+import logs
 from common.yaml_config import GetConf
 
 
 class ObjectMap:
-    url = GetConf.get_url()
+    base_url = GetConf().get_url()
 
     def get_element(self, driver, locate_type, locate_expression, is_visible=False, timeout=10):
         """
@@ -131,8 +133,13 @@ class ObjectMap:
         else:
             pass
 
-    def go_to_url(self, driver, url, locate_type_disappear=None, locate_expression_disappear=None,
-                  locate_type_appear=None, locate_expression_appear=None):
+    def go_to_url(self,
+                  driver,
+                  url,
+                  locate_type_disappear=None,
+                  locate_expression_disappear=None,
+                  locate_type_appear=None,
+                  locate_expression_appear=None):
         """
         go to url
         :param driver: driver of browser
@@ -145,7 +152,7 @@ class ObjectMap:
 
         """
         try:
-            driver.get(self.url + url)
+            driver.get(self.base_url + url)
             # waiting  the new page complete loading
             self.wait_for_completing_page_loading(driver)
             # check the element in old page disappear
@@ -171,7 +178,7 @@ class ObjectMap:
         except NoSuchElementException:
             return False
 
-    def fill_value(self, driver, locate_type, locate_expression, value, timeout):
+    def fill_value(self, driver, locate_type, locate_expression, value, timeout=30):
         """
         fill value into the element
         :param driver: browser driver

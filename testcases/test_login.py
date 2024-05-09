@@ -14,11 +14,7 @@ class TestLogin:
 
     def test_login(self):
         driver = WebdriverConfig().webdirver_config()
-        driver.get("http://192.168.0.121")
-        sleep(self.SECONDE_THREE)
-        LoginPage().login_input_value(driver, "用户名", "周杰伦")
-        sleep(self.SECONDE_ONE)
-        LoginPage().login_input_value(driver, "密码", '1234abcd!')
-        sleep(self.SECONDE_ONE)
-        LoginPage().click_login(driver, "登录")
-        sleep(10)
+        #driver.get("http://192.168.0.121/login")
+        LoginPage().login(driver,"jay")
+        sleep(3)
+
