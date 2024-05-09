@@ -17,4 +17,5 @@ class TestLogin:
         #driver.get("http://192.168.0.121/login")
         LoginPage().login(driver,"jay")
         sleep(3)
+        driver.quit()
 
