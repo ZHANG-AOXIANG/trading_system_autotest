@@ -306,6 +306,16 @@ class ObjectMap:
         :param locate_type: locator's  type
         :param locate_expression: locator's expression
         :param file_path: file's path
+        :return
         """
         upload_element = self.get_element(driver, locate_type, locate_expression)
         return upload_element.send_keys(file_path)
+
+    def switch_window_to_latest(self, driver):
+        """
+        switch handle to the latest window
+        :param driver: browser's driver
+        return
+        """
+        window_handles = driver.window_handles
+        driver.switch_to.window(window_handles[-1])
