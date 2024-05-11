@@ -298,3 +298,14 @@ class ObjectMap:
             return False
 
         return True
+
+    def upload_file(self, driver, locate_type, locate_expression, file_path):
+        """
+        upload file
+        :param driver: browser's driver
+        :param locate_type: locator's  type
+        :param locate_expression: locator's expression
+        :param file_path: file's path
+        """
+        upload_element = self.get_element(driver, locate_type, locate_expression)
+        return upload_element.send_keys(file_path)
