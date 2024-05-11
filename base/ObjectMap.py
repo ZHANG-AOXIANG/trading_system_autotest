@@ -319,3 +319,21 @@ class ObjectMap:
         """
         window_handles = driver.window_handles
         driver.switch_to.window(window_handles[-1])
+
+    def into_iframe(self,driver,locate_iframe_type,locate_iframe_expression):
+        """
+        switch to iframe
+        :param driver: browser's driver
+        :param locate_iframe_type: type of locating iframe
+        :param locate_iframe_expression: expression of locating iframe
+        """
+        iframe=self.get_element(driver,locate_iframe_type,locate_iframe_expression)
+        driver.switch_to.frame(iframe)
+
+    def out_from_iframe(self,driver):
+        """
+        switch out from iframe
+        :param driver: browser's driver
+        """
+        driver.switch_to.parent_frame()
+
