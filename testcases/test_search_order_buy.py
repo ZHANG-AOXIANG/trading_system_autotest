@@ -23,3 +23,5 @@ class TestSearchOrderBuy:
             OrderPage().click_button_in_order_page(driver, button)
             time.sleep(2)
         driver.quit()
+
+
