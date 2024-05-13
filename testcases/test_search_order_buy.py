@@ -4,12 +4,30 @@
 
 import time
 
+import pytest
+
 from config.WebdriverConfig import WebdriverConfig
 from page.LoginPage import LoginPage
 from page.LeftMenuPage import LeftMenuPage
 from page.OrderPage import OrderPage
 
+button_list = ["全部", "待付款", "待发货", "运输中", "待确认", "待评价"]
 
+
+class TestSearchOrderBuy:
+    @pytest.mark.parametrize("button", button_list)
+    def test_search_order_buy(self, driver, button):
+        LoginPage().login(driver, "jay")
+        LeftMenuPage().click_level_one_menu(driver, "我的订单")
+        time.sleep(1)
+        LeftMenuPage().click_level_two_menu(driver, "已买到的宝贝")
+        time.sleep(1)
+        OrderPage().click_button_in_order_page(driver, button)
+        time.sleep(2)
+        driver.quit()
+
+
+"""
 class TestSearchOrderBuy:
     def test_search_order_buy(self, driver):
         LoginPage().login(driver, "jay")
@@ -22,3 +40,4 @@ class TestSearchOrderBuy:
             OrderPage().click_button_in_order_page(driver, button)
             time.sleep(2)
         driver.quit()
+"""
