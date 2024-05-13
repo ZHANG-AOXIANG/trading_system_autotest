@@ -3,6 +3,8 @@
 # @TIME: 21:25 2024/5/10 UTC+8
 import time
 
+import pytest
+
 from config.WebdriverConfig import WebdriverConfig
 from page.LoginPage import LoginPage
 from page.LeftMenuPage import LeftMenuPage
@@ -10,8 +12,14 @@ from page.GoodsPage import GoodsPage
 
 
 class TestAddGoods:
-    def test_add_goods_001(self):
-        driver = WebdriverConfig().webdirver_config()
+    @pytest.fixture()
+    def driver(self):
+        get_driver = WebdriverConfig().webdirver_config()
+        yield get_driver
+        get_driver.quit()
+
+    def test_add_goods_001(self, driver):
+        # driver = WebdriverConfig().webdirver_config()
         LoginPage().login(driver, "jay")
         LeftMenuPage().click_level_one_menu(driver, "产品")
         time.sleep(1)
