@@ -11,8 +11,7 @@ from page.IframeBaiduMapPage import IframeBaiduMapPage
 
 
 class TestIframeBaiduMap:
-    def test_iframe_baidu_map(self):
-        driver = WebdriverConfig().webdirver_config()
+    def test_iframe_baidu_map(self, driver):
         LoginPage().login(driver, "jay")
         time.sleep(1)
         LeftMenuPage().click_level_one_menu(driver, "iframe测试")

@@ -11,8 +11,7 @@ from page.OrderPage import OrderPage
 
 
 class TestSearchOrderBuy:
-    def test_search_order_buy(self):
-        driver = WebdriverConfig().webdirver_config()
+    def test_search_order_buy(self, driver):
         LoginPage().login(driver, "jay")
         LeftMenuPage().click_level_one_menu(driver, "我的订单")
         time.sleep(1)
@@ -23,5 +22,3 @@ class TestSearchOrderBuy:
             OrderPage().click_button_in_order_page(driver, button)
             time.sleep(2)
         driver.quit()
-
-

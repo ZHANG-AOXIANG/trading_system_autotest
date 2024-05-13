@@ -10,8 +10,7 @@ from page.LeftMenuPage import LeftMenuPage
 
 
 class TestSwitchWindow:
-    def test_switch_window(self):
-        driver = WebdriverConfig().webdirver_config()
+    def test_switch_window(self, driver):
         LoginPage().login(driver, "jay")
         time.sleep(3)
         LeftMenuPage().click_level_one_menu(driver, "外链")

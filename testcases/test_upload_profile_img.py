@@ -11,8 +11,7 @@ from page.AccountPage import AccountPage
 
 
 class TestUploadProfileImg(LoginPage, AccountPage):
-    def test_upload_profile_img(self):
-        driver = WebdriverConfig().webdirver_config()
+    def test_upload_profile_img(self, driver):
         LoginPage().login(driver, "jay")
         LeftMenuPage().click_level_one_menu(driver, "账户设置")
         time.sleep(1)
