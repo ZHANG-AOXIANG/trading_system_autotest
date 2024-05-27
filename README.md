@@ -1,4 +1,4 @@
-# Trading System Automation Test System
+# Trading System Automation Test System(In Progress)
 
 ## 概述
 **测试对象**：Trading System。该系统共有7个模块，分别为“登录模块”，“首页模块”，“交易市场”，“iframe测试”，“我的订单”，“产品”，“账户设置”
